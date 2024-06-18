@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: live_backend
+
+server:
+  port: 2654
+  servlet:
+    context-path: /api
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*Mapper.xml
+  global-config:
+    db-config:
+      table-prefix: live_
+
+logging:
+  file:
+    path: log
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      max-file-size: 5MB
