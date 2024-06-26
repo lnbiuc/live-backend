@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 data class Room(
     @TableId(type = IdType.ASSIGN_ID)
-    val id: Long,
+    val id: Long?,
     val userId: Long?,
     val createTime: LocalDate?,
     val expireTime: LocalDate?,

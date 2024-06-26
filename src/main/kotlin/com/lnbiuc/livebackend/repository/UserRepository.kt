@@ -2,7 +2,7 @@ package com.lnbiuc.livebackend.repository
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
 import com.lnbiuc.livebackend.`do`.User
-import org.springframework.stereotype.Repository
+import org.apache.ibatis.annotations.Mapper
 
-@Repository
-interface UserRepository: BaseMapper<User> {}
+@Mapper
+interface UserRepository: BaseMapper<User>

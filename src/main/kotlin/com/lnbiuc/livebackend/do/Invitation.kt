@@ -7,7 +7,7 @@ import java.time.LocalDate
 data class Invitation(
 
     @TableId(type = IdType.ASSIGN_ID)
-    val id: Long,
+    val id: Long?,
     var usedUserId: Long?,
     val creator: Long?,
     val createTime: LocalDate?,

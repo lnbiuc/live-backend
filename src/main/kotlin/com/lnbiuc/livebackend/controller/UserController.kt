@@ -1,6 +1,8 @@
 package com.lnbiuc.livebackend.controller
 
 import com.lnbiuc.livebackend.exception.BIZException
+import com.lnbiuc.livebackend.exception.DBUpdateError
+import com.lnbiuc.livebackend.exception.InvalidInvitationCode
 import com.lnbiuc.livebackend.model.dto.UserRegisterDto
 import com.lnbiuc.livebackend.service.UserService
 import org.springframework.http.HttpStatus
@@ -15,12 +17,19 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val userService: UserService) {
 
     @PostMapping("/register")
-    fun register(@RequestBody user: UserRegisterDto):ResponseEntity<Unit> {
+    fun register(@RequestBody user: UserRegisterDto): ResponseEntity<String> {
         try {
             userService.registerByInvitationCode(user)
-        } catch (ex: BIZException) {
-            return ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+        } catch (biz: BIZException) {
+            return ResponseEntity(biz.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        } catch (db: DBUpdateError) {
+            return ResponseEntity(db.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        } catch (code: InvalidInvitationCode) {
+            return ResponseEntity(code.message, HttpStatus.FORBIDDEN)
+        } catch (e: Throwable) {
+            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
+
         return ResponseEntity(HttpStatus.OK)
     }
 }

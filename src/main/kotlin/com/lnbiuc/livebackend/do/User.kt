@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 data class User(
     @TableId(type = IdType.ASSIGN_ID)
-    val id: Long,
+    val id: Long?,
     val username: String?,
     val password: String?,
     val pwdSale: String?,
@@ -17,7 +17,7 @@ data class User(
     val loginCount: Int?
 ) {
     constructor(username: String, password: String, invitationCode: String): this(
-        id = 0L,
+        id = null,
         username = username,
         password = handlePassword(password)["pwd"],
         pwdSale = handlePassword(password)["sale"],

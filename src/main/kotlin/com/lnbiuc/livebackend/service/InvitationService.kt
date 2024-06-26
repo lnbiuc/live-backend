@@ -1,7 +1,9 @@
 package com.lnbiuc.livebackend.service
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.lnbiuc.livebackend.`do`.Invitation
+import com.lnbiuc.livebackend.exception.DBUpdateError
 import com.lnbiuc.livebackend.exception.InvalidInvitationCode
 import com.lnbiuc.livebackend.repository.InvitationRepository
 import org.springframework.stereotype.Service
@@ -11,17 +13,25 @@ import java.time.LocalDateTime
 class InvitationService(private val invitationRepository: InvitationRepository) {
 
     fun validatorInvitationCode(invitationCode: String) {
-        val queryWrapper = LambdaQueryWrapper<Invitation>()
-        queryWrapper.eq(Invitation::code, invitationCode)
-            .lt(Invitation::expireTime, LocalDateTime.now())
-            .isNull(Invitation::usedUserId)
-        val exist = invitationRepository.selectOne(queryWrapper)
+        queryUseInvitation(invitationCode) ?: throw InvalidInvitationCode()
+    }
+
+    fun useCode(userId: Long, invitationCode: String) {
+        val exist = queryUseInvitation(invitationCode)
         if (exist != null) {
-            throw InvalidInvitationCode()
+            exist.usedUserId = userId
+            val updateCount = invitationRepository.updateById(exist)
+            if (updateCount < 1) {
+                throw DBUpdateError()
+            }
         }
     }
 
-    fun useCode(id: Long, invitationCode: String) {
-        invitationRepository.updateByCode(invitationCode, id)
+    fun queryUseInvitation(invitationCode:String): Invitation? {
+        val queryWrapper = KtQueryWrapper(Invitation::class.java)
+        queryWrapper.eq(Invitation::code, invitationCode)
+            .ge(Invitation::expireTime, LocalDateTime.now())
+            .isNull(Invitation::usedUserId)
+        return invitationRepository.selectOne(queryWrapper)
     }
 }
