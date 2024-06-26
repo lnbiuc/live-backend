@@ -1,6 +1,4 @@
-package com.lnbiuc.livebackend.model.dto
-
-import java.time.LocalDate
+package com.lnbiuc.livebackend.controller.user.dto
 
 data class UserRegisterDto(
     val username: String,

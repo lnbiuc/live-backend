@@ -14,4 +14,14 @@ data class Invitation(
     val expireTime: LocalDate?,
     val code: String?,
     val remark: String?
-)
+) {
+    constructor(creator: Long?, code: String?, remark: String?) : this(
+        id = null,
+        usedUserId = null,
+        creator = creator,
+        createTime = LocalDate.now(),
+        expireTime = LocalDate.now().plusDays(30),
+        code = code,
+        remark = remark
+    )
+}

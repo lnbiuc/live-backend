@@ -1,9 +1,9 @@
-package com.lnbiuc.livebackend.controller
+package com.lnbiuc.livebackend.controller.user
 
 import com.lnbiuc.livebackend.exception.BIZException
 import com.lnbiuc.livebackend.exception.DBUpdateError
 import com.lnbiuc.livebackend.exception.InvalidInvitationCode
-import com.lnbiuc.livebackend.model.dto.UserRegisterDto
+import com.lnbiuc.livebackend.controller.user.dto.UserRegisterDto
 import com.lnbiuc.livebackend.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
