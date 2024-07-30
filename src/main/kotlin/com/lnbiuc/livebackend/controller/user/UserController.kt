@@ -20,16 +20,15 @@ class UserController(private val userService: UserService) {
     fun register(@RequestBody user: UserRegisterDto): ResponseEntity<String> {
         try {
             userService.registerByInvitationCode(user)
-        } catch (biz: BIZException) {
-            return ResponseEntity(biz.message, HttpStatus.INTERNAL_SERVER_ERROR)
-        } catch (db: DBUpdateError) {
-            return ResponseEntity(db.message, HttpStatus.INTERNAL_SERVER_ERROR)
-        } catch (code: InvalidInvitationCode) {
-            return ResponseEntity(code.message, HttpStatus.FORBIDDEN)
         } catch (e: Throwable) {
             return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }
 
         return ResponseEntity(HttpStatus.OK)
+    }
+
+    @PostMapping("/login")
+    fun login() {
+        
     }
 }

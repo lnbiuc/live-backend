@@ -36,25 +36,4 @@ class InvitationService(private val invitationRepository: InvitationRepository) 
             .isNull(Invitation::usedUserId)
         return invitationRepository.selectOne(queryWrapper)
     }
-
-    fun createInvitation(dto: InvitationCreateDto) {
-
-        fun getCodeExistRecord(code: String): List<Invitation>? {
-            val queryWrapper = KtQueryWrapper(Invitation::class.java).eq(Invitation::code, code)
-            return invitationRepository.selectList(queryWrapper)
-        }
-
-        val exist = getCodeExistRecord(dto.code)
-        if (exist.isNullOrEmpty()) {
-            throw BIZException("Repeat invitation code")
-        }
-
-        val root = 1803348194139148290L
-        val invitation = Invitation(root, dto.code, dto.remark)
-
-        val insert = invitationRepository.insert(invitation)
-        if (insert < 1) {
-            throw DBUpdateError()
-        }
-    }
 }
