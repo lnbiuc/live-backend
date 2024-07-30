@@ -1,34 +1,41 @@
 package com.lnbiuc.livebackend.controller.user
 
-import com.lnbiuc.livebackend.exception.BIZException
-import com.lnbiuc.livebackend.exception.DBUpdateError
-import com.lnbiuc.livebackend.exception.InvalidInvitationCode
+import cn.hutool.jwt.JWT
+import com.lnbiuc.livebackend.constant.SysEnum
+import com.lnbiuc.livebackend.controller.user.dto.UserLoginDto
 import com.lnbiuc.livebackend.controller.user.dto.UserRegisterDto
 import com.lnbiuc.livebackend.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.web.bind.annotation.*
+
 
 @RestController
 @RequestMapping("/user")
-class UserController(private val userService: UserService) {
+class UserController(private val userService: UserService, private val authenticationManager: AuthenticationManager) {
+
+    @PostMapping("/login")
+    fun login(@RequestBody params: UserLoginDto): ResponseEntity<String> {
+        val auth = UsernamePasswordAuthenticationToken(params.username, params.password)
+        authenticationManager.authenticate(auth)
+        val token = JWT.create()
+            .setPayload("username", params.username)
+            .setKey(SysEnum.JWT_SIGN_KEY.value.toByteArray())
+            .sign()
+
+        return ResponseEntity(token, HttpStatus.OK)
+    }
 
     @PostMapping("/register")
-    fun register(@RequestBody user: UserRegisterDto): ResponseEntity<String> {
-        try {
-            userService.registerByInvitationCode(user)
-        } catch (e: Throwable) {
-            return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
-        }
-
+    fun register(@RequestBody params: UserRegisterDto): ResponseEntity<String> {
+        userService.register(params)
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @PostMapping("/login")
-    fun login() {
-        
+    @GetMapping("/auth_required")
+    fun authRequired(): ResponseEntity<String> {
+        return ResponseEntity("break", HttpStatus.OK)
     }
 }

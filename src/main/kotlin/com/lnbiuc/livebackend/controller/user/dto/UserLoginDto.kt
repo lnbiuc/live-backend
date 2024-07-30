@@ -1,6 +1,6 @@
 package com.lnbiuc.livebackend.controller.user.dto
 
-data class UserRegisterDto(
+data class UserLoginDto(
     val username: String,
-    val password: String,
+    val password: String
 )

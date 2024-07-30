@@ -27,7 +27,8 @@ dependencies {
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7")
     implementation("cn.hutool:hutool-core:5.8.28")
     implementation("org.springframework.boot:spring-boot-starter-actuator:3.3.2")
-
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation ("cn.hutool:hutool-all:5.8.25")
 
 
     runtimeOnly("org.postgresql:postgresql")
