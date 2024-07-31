@@ -14,7 +14,6 @@ data class User(
     val username: String,
     @get:JvmName("getUserPassword")
     val password: String,
-    val pwdSale: String?,
     val invitationCode: String,
     val disabled: Boolean,
     val createTime: LocalDate?,
@@ -26,7 +25,6 @@ data class User(
         id = null,
         username,
         password,
-        pwdSale = null,
         invitationCode = "default",
         disabled = false,
         createTime = LocalDate.now(),

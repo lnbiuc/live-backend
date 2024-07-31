@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/invitation")
-class InvitationController() {
+class InvitationController(private val invitationService: InvitationService) {
 
     @PostMapping("/create")
     fun create(@RequestBody invitationCreateDto :InvitationCreateDto): ResponseEntity<String> {
         try {
-//            invitationService.createInvitation(invitationCreateDto)
+            invitationService.createInvitation(invitationCreateDto)
         } catch (ex: Exception) {
             return ResponseEntity(ex.message, HttpStatus.INTERNAL_SERVER_ERROR)
         }

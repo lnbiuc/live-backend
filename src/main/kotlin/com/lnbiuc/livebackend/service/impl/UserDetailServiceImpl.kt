@@ -3,6 +3,7 @@ package com.lnbiuc.livebackend.service.impl
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.lnbiuc.livebackend.controller.user.dto.UserRegisterDto
 import com.lnbiuc.livebackend.`do`.User
+import com.lnbiuc.livebackend.exception.BIZException
 import com.lnbiuc.livebackend.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -22,8 +23,13 @@ class UserDetailServiceImpl(
     }
 
     fun register(params: UserRegisterDto) {
-        val password = passwordEncoder.encode(params.password)
-        val user = User(params.username, password)
-        userRepository.insert(user)
+        val exist = loadUserByUsername(params.username)
+        if (exist == null) {
+            val password = passwordEncoder.encode(params.password)
+            val user = User(params.username, password)
+            userRepository.insert(user)
+        } else {
+            throw BIZException("username has be used!")
+        }
     }
 }

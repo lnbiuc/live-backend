@@ -36,9 +36,4 @@ class UserController(private val userDetailService: UserDetailServiceImpl, priva
         userDetailService.register(params)
         return ResponseEntity(HttpStatus.OK)
     }
-
-    @PostMapping("/auth_required")
-    fun authRequired(): ResponseEntity<String> {
-        return ResponseEntity("break", HttpStatus.OK)
-    }
 }
