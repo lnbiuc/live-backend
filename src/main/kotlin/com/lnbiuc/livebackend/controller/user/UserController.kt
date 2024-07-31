@@ -4,17 +4,20 @@ import cn.hutool.jwt.JWT
 import com.lnbiuc.livebackend.constant.SysEnum
 import com.lnbiuc.livebackend.controller.user.dto.UserLoginDto
 import com.lnbiuc.livebackend.controller.user.dto.UserRegisterDto
-import com.lnbiuc.livebackend.service.UserService
+import com.lnbiuc.livebackend.service.impl.UserDetailServiceImpl
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
 @RequestMapping("/user")
-class UserController(private val userService: UserService, private val authenticationManager: AuthenticationManager) {
+class UserController(private val userDetailService: UserDetailServiceImpl, private val authenticationManager: AuthenticationManager) {
 
     @PostMapping("/login")
     fun login(@RequestBody params: UserLoginDto): ResponseEntity<String> {
@@ -30,11 +33,11 @@ class UserController(private val userService: UserService, private val authentic
 
     @PostMapping("/register")
     fun register(@RequestBody params: UserRegisterDto): ResponseEntity<String> {
-        userService.register(params)
+        userDetailService.register(params)
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @GetMapping("/auth_required")
+    @PostMapping("/auth_required")
     fun authRequired(): ResponseEntity<String> {
         return ResponseEntity("break", HttpStatus.OK)
     }

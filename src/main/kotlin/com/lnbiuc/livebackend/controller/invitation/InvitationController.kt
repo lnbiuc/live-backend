@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/invitation")
-class InvitationController(private val invitationService: InvitationService) {
+class InvitationController() {
 
     @PostMapping("/create")
     fun create(@RequestBody invitationCreateDto :InvitationCreateDto): ResponseEntity<String> {
