@@ -29,7 +29,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator:3.3.2")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation ("cn.hutool:hutool-all:5.8.25")
-
+    implementation("io.github.linpeilie:mapstruct-plus-spring-boot-starter:1.4.3")
+    implementation("io.github.linpeilie:mapstruct-plus-processor:1.4.3")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.3.2")
 
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

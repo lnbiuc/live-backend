@@ -7,12 +7,12 @@ import java.time.LocalDate
 
 data class Oplog(
     @TableId(type = IdType.ASSIGN_ID)
-    val id: Long?,
-    val userId: Long?,
-    val opTime: LocalDate?,
-    val opCost: BigDecimal?,
-    val reqParams: String?,
-    val opLog: String?,
-    val opType: String?,
-    val opResult: String?
+    var id: Long?,
+    var userId: Long?,
+    var opTime: LocalDate?,
+    var opCost: BigDecimal?,
+    var reqParams: String?,
+    var opLog: String?,
+    var opType: String?,
+    var opResult: String?
 )

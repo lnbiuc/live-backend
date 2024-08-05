@@ -7,13 +7,13 @@ import java.time.LocalDate
 data class Invitation(
 
     @TableId(type = IdType.ASSIGN_ID)
-    val id: Long?,
+    var id: Long?,
     var usedUserId: Long?,
-    val creator: Long?,
-    val createTime: LocalDate?,
-    val expireTime: LocalDate?,
-    val code: String?,
-    val remark: String?
+    var creator: Long?,
+    var createTime: LocalDate?,
+    var expireTime: LocalDate?,
+    var code: String?,
+    var remark: String?
 ) {
     constructor(creator: Long?, code: String?, remark: String?) : this(
         id = null,
