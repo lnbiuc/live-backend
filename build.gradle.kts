@@ -32,6 +32,9 @@ dependencies {
     implementation("io.github.linpeilie:mapstruct-plus-spring-boot-starter:1.4.3")
     implementation("io.github.linpeilie:mapstruct-plus-processor:1.4.3")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.3.2")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.3.1")
+    implementation("com.tencentcloudapi:tencentcloud-sdk-java-live:3.1.1071")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.52")
 
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
